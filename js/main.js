@@ -33,7 +33,7 @@ app.init = () => {
 
     // helps you visualise your axes on screen
     app.axes = new THREE.AxesHelper(200);
-    app.scene.add(app.axes);
+    // app.scene.add(app.axes);
 
     // create a spotlight that is defined in main.lib file and add it to the scene
     app.spotLight = app.createSpotLight();
@@ -69,6 +69,9 @@ app.init = () => {
         app.renderer.domElement,
     )
 
+    app.particleSystem = app.createParticleSystem();
+    app.scene.add(app.particleSystem);
+
     // initial value of sphere
     app.step = 0;
 
@@ -81,8 +84,21 @@ window.onload = app.init;
 app.animate = () => {
     app.renderer.render(app.scene, app.camera);
 
+    // animates the stars
+    app.animateParticleSystem();
+
     app.step += 0.05;
-    app.sphere.position.y = Math.sin(app.step) * 20;
+
+    app.sphere.rotation.y += 0.02;
+    // app.sphere.scale.x += 0.01;
+    // app.sphere.scale.y += 0.01;
+    // app.sphere.scale.z += 0.01;
+
+    // make sphere go in circle
+    // app.sphere.position.x = Math.cos(app.step) * 35;
+    // app.sphere.position.y = Math.sin(app.step) * 35;
+    // app.sphere.position.z += 0.01;
+
     // app.sphere.position.x += 0.01;
     // app.sphere.position.y += 0.01;
     // app.sphere.position.z += 0.01;
@@ -91,6 +107,10 @@ app.animate = () => {
     app.cube.rotation.x += 0.01;
     app.cube.rotation.y += 0.01;
     app.cube.rotation.z += 0.01;
+    // app.cube.scale.x += 0.01;
+    // app.cube.scale.y += 0.01;
+    // app.cube.scale.z += 0.01;
+
 
     // animate all cubes
     app.cubes.forEach(cube => {
