@@ -25,6 +25,8 @@ app.init = () => {
     app.renderer = new THREE.WebGLRenderer();
     app.renderer.setSize(window.innerWidth, window.innerHeight);
     app.renderer.setClearColor(0x000000);
+    // make things appear less pixelated
+    app.renderer.setPixelRatio(window.devicePixelRatio || 1);
 
     // append renderer to html
     document.getElementById('output').appendChild(app.renderer.domElement);
@@ -45,6 +47,10 @@ app.init = () => {
     app.sphere = app.createSphere();
     app.scene.add(app.sphere);
 
+    // add a cube to the scene at coordinates in args
+    app.cube = app.createCube(50, 50, 0);
+    app.scene.add(app.cube);
+
     // link mouseevent to animation to rerender with different camera angles
     app.mouseControls = new THREE.OrbitControls(
         app.camera,
@@ -59,6 +65,9 @@ app.init = () => {
 window.onload = app.init;
 app.animate = () => {
     app.renderer.render(app.scene, app.camera);
+
+    // rotate cube
+    app.cube.rotation.x += 0.01;
 
     requestAnimationFrame(app.animate)
 }

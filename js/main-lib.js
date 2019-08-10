@@ -25,3 +25,26 @@ app.createSphere = () => {
 
     return sphere;
 }
+
+app.createCube = (x, y, z) => {
+    const cubeGeometry = new THREE.BoxGeometry(
+        15, //width
+        15, // height
+        15, //depth
+    );
+
+    const cubeMaterial = new THREE.MeshLambertMaterial({
+        color: 0xffffff,
+    });
+
+    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    cube.position.set(x, y, z);
+
+    cube.material.color.setRGB(
+        Math.random(),
+        Math.random(),
+        Math.random(),
+    )
+
+    return cube;
+}
