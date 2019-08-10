@@ -12,7 +12,8 @@ app.init = () => {
         0.1, // near plane
         1000, // far plane
     );
-        // create camera position
+
+    // create camera position
     app.camera.position.x = -100;
     app.camera.position.y = 250;
     app.camera.position.z = 100;
@@ -27,6 +28,32 @@ app.init = () => {
 
     // append renderer to html
     document.getElementById('output').appendChild(app.renderer.domElement);
+
+    // helps you visualise your axes on screen
+    app.axes = new THREE.AxesHelper(200);
+    app.scene.add(app.axes);
+
+    // create a spotlight that is defined in main.lib file and add it to the scene
+    app.spotLight = app.createSpotLight();
+    app.scene.add(app.spotLight);
+
+    // create object that is defined in mainlib
+    app.sphere = app.createSphere();
+    app.scene.add(app.sphere);
+
+    // render scene onto the canvas
+    app.renderer.render(app.scene, app.camera);
 }
 
 window.onload = app.init;
+
+// if you update window size your graphics will be updated to the new window size - responsiveness
+app.resize = () => {
+    app.camera.aspect = window.innerWidth / window.innerHeight;
+    app.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    app.camera.updateProjectionMatrix();
+    console.log('size update')
+}
+
+window.addEventListener('resize', app.resize);
