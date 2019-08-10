@@ -40,6 +40,10 @@ app.createCube = (x, y, z) => {
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
     cube.position.set(x, y, z);
 
+    cube.rotation.x = Math.random();
+    cube.rotation.y = Math.random();
+    cube.rotation.z = Math.random();
+
     cube.material.color.setRGB(
         Math.random(),
         Math.random(),

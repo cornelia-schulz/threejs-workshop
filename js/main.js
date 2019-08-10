@@ -48,8 +48,20 @@ app.init = () => {
     app.scene.add(app.sphere);
 
     // add a cube to the scene at coordinates in args
-    app.cube = app.createCube(50, 50, 0);
+    app.cube = app.createCube(60, 50, 0);
     app.scene.add(app.cube);
+
+    app.cubes = [];
+    for (let i = 0; i < 30; i++) {
+        const range = 100;
+        const cube = app.createCube(
+            THREE.Math.randInt(-range, range), // x
+            THREE.Math.randInt(-range, range), // y
+            THREE.Math.randInt(-range, range), // z
+        );
+        app.scene.add(cube);
+        app.cubes.push(cube);
+    }
 
     // link mouseevent to animation to rerender with different camera angles
     app.mouseControls = new THREE.OrbitControls(
@@ -66,8 +78,20 @@ window.onload = app.init;
 app.animate = () => {
     app.renderer.render(app.scene, app.camera);
 
-    // rotate cube
+    // rotate cube around its x-axis
     app.cube.rotation.x += 0.01;
+    app.cube.rotation.y += 0.01;
+    app.cube.rotation.z += 0.01;
+
+    // animate all cubes
+    app.cubes.forEach(cube => {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        cube.rotation.z += 0.01;
+    })
+
+    // ensures that graphics don't get squashed
+    app.mouseControls.update();
 
     requestAnimationFrame(app.animate)
 }
