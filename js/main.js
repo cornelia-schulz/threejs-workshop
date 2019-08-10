@@ -37,15 +37,31 @@ app.init = () => {
     app.spotLight = app.createSpotLight();
     app.scene.add(app.spotLight);
 
+    // add some ambient light - creates no shadows
+    app.ambient = new THREE.AmbientLight(0x666666);
+    app.scene.add(app.ambient);
+
     // create object that is defined in mainlib
     app.sphere = app.createSphere();
     app.scene.add(app.sphere);
 
+    // link mouseevent to animation to rerender with different camera angles
+    app.mouseControls = new THREE.OrbitControls(
+        app.camera,
+        app.renderer.domElement,
+    )
+
     // render scene onto the canvas
-    app.renderer.render(app.scene, app.camera);
+    // app.renderer.render(app.scene, app.camera);
+    app.animate();
 }
 
 window.onload = app.init;
+app.animate = () => {
+    app.renderer.render(app.scene, app.camera);
+
+    requestAnimationFrame(app.animate)
+}
 
 // if you update window size your graphics will be updated to the new window size - responsiveness
 app.resize = () => {
