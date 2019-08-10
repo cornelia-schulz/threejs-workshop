@@ -69,6 +69,9 @@ app.init = () => {
         app.renderer.domElement,
     )
 
+    // initial value of sphere
+    app.step = 0;
+
     // render scene onto the canvas
     // app.renderer.render(app.scene, app.camera);
     app.animate();
@@ -77,6 +80,12 @@ app.init = () => {
 window.onload = app.init;
 app.animate = () => {
     app.renderer.render(app.scene, app.camera);
+
+    app.step += 0.05;
+    app.sphere.position.y = Math.sin(app.step) * 20;
+    // app.sphere.position.x += 0.01;
+    // app.sphere.position.y += 0.01;
+    // app.sphere.position.z += 0.01;
 
     // rotate cube around its x-axis
     app.cube.rotation.x += 0.01;
